@@ -6,8 +6,8 @@ describe('Changing the currency', () => {
     // Click on the currency button
     cy.get('TopNav-RegionalSettingsButton').click();  
 
-    //Choose the currency
-    cy.get('button').click(); 
+    //Choose the currency EUR
+    cy.get('body').should('currency', 'EUR');
 
     //Click save and continue
-    cy.get('button').click(); 
+    cy.get('SubmitRegionalSettingsButton').click(); 
