@@ -4,7 +4,7 @@ describe('Log in with the email', () => {
     cy.visit('https://www.kiwi.com/en/');
 
     // Click on the Sign in button
-    cy.get('[data-cy="TopNav-SignInButton"]').click();
+    cy.get('[data-test="TopNav-SignInButton"]').click();
 
     // Click on the Email button (assuming you meant Facebook login here, it should be correct)
     cy.get('[data-cy="MagicLogin-LoginViaFacebook"]').click();
