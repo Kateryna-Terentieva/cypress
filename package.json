@@ -1,0 +1,22 @@
+{
+  "name": "cypress",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kateryna-Terentieva/cypress.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kateryna-Terentieva/cypress/issues"
+  },
+  "homepage": "https://github.com/Kateryna-Terentieva/cypress#readme",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^13.15.0"
+  }
+}
