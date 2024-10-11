@@ -1,27 +1,24 @@
 describe('Add to Cart Functionality', () => {
-    it('should add an item to the cart', () => {
-      // Step 1: Visit the homepage
-      cy.visit('https://www.saucedemo.com/');
+  it('should add an item to the cart', () => {
+    // Step 1: Visit the homepage
+    cy.visit('https://www.saucedemo.com/');
+    
+  
+    // Step 2: Log in 
+    cy.get('input#user-name').type('standard_user'); // Enter username
+    cy.get('input#password').type('secret_sauce'); // Enter password
+    cy.get('input#login-button').click(); // Click the login button
 
-      // Step 2: Navigate to the product page
-    cy.get('https://www.saucedemo.com/inventory.html') 
-    .first(https://www.saucedemo.com/inventory-item.html?id=4)
-    .click();
+    // Step 3: Add the first product to the cart
+    cy.get('.inventory_item').first().find('class="btn btn_primary btn_small btn_inventory "').click(); // Click the "Add to Cart" button
 
-// Step 3: Click the "Add to Cart" button
-cy.get('class="btn btn_primary btn_small btn_inventory"') 
-.click();
+    // Step 4: Verify that the item was added to the cart
+    cy.get('.shopping_cart_link').click(); // Click on the cart icon
 
- // Step 4: Verify that the item was added to the cart
- cy.get('class="shopping_cart_link"') 
- .click();
+    // Step 5: Check that the cart contains the added item
+    cy.get('.cart_item').should('have.length.greaterThan', 0); // Ensure at least one item is in the cart
 
- // Step 5: Check that the cart contains the added item
- cy.get('inventory_item_name') 
- .should('have.length.greaterThan', 0); 
-
-  // Step 6: Optionally, check that the correct item is in the cart
-  cy.get('class="inventory_item_name"') // Replace with the selector for the item name in the cart
-  .should('contain', 'Sauce Labs Backpack'); // Replace with the actual product name
-});
+    // Step 6: Optionally, check that the correct item is in the cart
+    cy.get('.inventory_item_name').should('contain', 'Sauce Labs Backpack'); // Check for the product name
+  });
 });
