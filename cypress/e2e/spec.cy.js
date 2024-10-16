@@ -2,6 +2,7 @@ describe('My First Test', () => {
   it('Log into the page', () => {
       
       cy.visit('https://www.megaknihy.cz/');
+      
 
       cy.contains('Účet').click();
 
