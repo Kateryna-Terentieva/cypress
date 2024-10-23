@@ -3,6 +3,9 @@ describe('My First Test', () => {
       
       cy.visit('https://www.megaknihy.cz/');
       
+      cy.get('.CybotCookiebotDialog, #CybotCookiebotDialog');
+
+      cy.get('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll').click();
 
       cy.contains('Účet').click();
 

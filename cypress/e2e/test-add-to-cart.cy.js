@@ -3,25 +3,58 @@ describe('Add to Cart Functionality on Megaknihy.cz', () => {
     // Step 1: Visit the homepage
     cy.visit('https://www.megaknihy.cz/');
 
-    // Step 2: Log in
-    cy.get('a[href*="identita"]', { timeout: 10000 }).should('be.visible').click();
-    cy.get('input[name="email"]').type('katherine.terentieva@gmail.com');
-    cy.get('input[name="passwd"]').type('testtest');
-    cy.get('button[type="submit"]').click(); // Submit the login form
+    // Step 2: Accept cookies if the banner is visible
+    cy.get('.CybotCookiebotDialog, #CybotCookiebotDialog', { timeout: 10000 })
+      .should('be.visible')
+      .then(($banner) => {
+        if ($banner.is(':visible')) {
+          cy.get('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll', { timeout: 10000 })
+            .should('be.visible')
+            .click();
+        }
+      });
 
-    // Step 3: Search for a product
-    cy.get('.query-input', { timeout: 10000 }).should('be.visible').type('Školní atlas světa{enter}'); // Search for the product
+    // Step 3: Verify that the banner is no longer visible
+    cy.get('.CybotCookiebotDialog, #CybotCookiebotDialog', { timeout: 10000 })
+      .should('not.be.visible');
 
-    // Step 4: Add the first product to the cart
-    cy.get('.product-item').first().find('.add_to_cart_button').click(); // Click the "Add to Cart" button
+    // Step 4: Search for a product
+    cy.get('.search_query.mk-input.cursive', { timeout: 10000 })
+      .should('be.visible')
+      .type('Harry Potter{enter}');
 
-    // Step 5: Navigate to the cart
-    cy.get('.shopping_cart_link').click(); // Click on the cart icon
+    // Wait for search results and click on the first book
+    cy.get('.product_img_link', { timeout: 10000 }).first().click();
 
-    // Step 6: Check that the cart contains the added item
-    cy.get('.cart_item').should('have.length.greaterThan', 0); // Ensure at least one item is in the cart
+    // Ensure the book detail page is loaded
+    cy.url().should('include', 'harry-potter');
 
-    // Step 7: Check that the correct item is in the cart
-    cy.get('.cart_item .product-name').should('contain', 'Školní atlas světa'); // Check for the product name
+    // Click the button that adds the product to the cart
+    cy.get('.now_visitors').click();
+    cy.get('.submit').first().click();
+
+    // Wait for the cart popup to appear and verify its visibility
+    cy.get('.cart-popup-content.popup-bookmarks', { timeout: 10000 })
+      .should('exist')
+      .and('be.visible');
+
+    // Click the button to continue to the cart
+    cy.get('.mk-btn.mk-primary.js-continue.cart-popup-handled')
+      .should('be.visible')
+      .click();
+
+    // Navigate to the cart page
+    cy.visit('https://www.megaknihy.cz/rychla-objednavka');
+
+    // Check if the URL is correct
+    cy.url().should('include', '/rychla-objednavka');
+
+    // Check for the existence of the item in the cart
+    cy.contains('Harry Potter and the Philosopher´s Stone', { timeout: 10000 })
+      .should('exist')
+      .then(() => {
+        cy.log('Item found in the cart.');
+      });
+      
   });
 });

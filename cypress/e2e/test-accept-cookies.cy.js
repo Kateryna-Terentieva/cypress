@@ -1,17 +1,19 @@
-describe('Megaknihy.cz Cookie Consent', () => {
-    it('should accept cookies', () => {
-        // Step 1: Visit the main page
-        cy.visit('https://www.megaknihy.cz/');
+describe('Cookies Banner Test', () => {
+  it('should accept cookies', () => {
+    cy.visit('https://www.megaknihy.cz/');
 
-        // Step 2: Wait for the cookie consent dialog to appear
-        cy.get('.CybotCookiebotDialog', { timeout: 10000 }).should('be.visible');
+    // Step 1: Attempt to find the cookies banner
+    cy.get('.CybotCookiebotDialog, #CybotCookiebotDialog', { timeout: 10000 }) // Adjusted selector
+      .should('be.visible')
+      .then(() => {
+        // Step 2: Click the button to accept cookies
+        cy.get('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll', { timeout: 10000 }) // Adjusted selector
+          .should('be.visible')
+          .click();
+      });
 
-        // Step 3: Accept cookies
-        cy.get('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll', { timeout: 10000 })
-          .should('be.visible') // Ensure the button is visible
-          .click(); // Click the button to accept cookies
-
-        // Step 4: Verify that the dialog is no longer visible
-        cy.get('.CybotCookiebotDialog', { timeout: 10000 }).should('not.exist');
-    });
+    // Step 3: Verify that the banner is no longer visible
+    cy.get('.CybotCookiebotDialog, #CybotCookiebotDialog', { timeout: 10000 })
+    .should('not.be.visible'); // Use not.be.visible instead of not.exist
+  });
 });
