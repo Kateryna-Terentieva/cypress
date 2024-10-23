@@ -23,33 +23,33 @@ describe('Add to Cart Functionality on Megaknihy.cz', () => {
       .should('be.visible')
       .type('Harry Potter{enter}');
 
-    // Wait for search results and click on the first book
+    // Step 5: Wait for search results and click on the first book
     cy.get('.product_img_link', { timeout: 10000 }).first().click();
 
-    // Ensure the book detail page is loaded
+    // Step 6: Ensure the book detail page is loaded
     cy.url().should('include', 'harry-potter');
 
-    // Click the button that adds the product to the cart
+    // Step 7: Click the button that adds the product to the cart
     cy.get('.now_visitors').click();
     cy.get('.submit').first().click();
 
-    // Wait for the cart popup to appear and verify its visibility
+    // Step 8: Wait for the cart popup to appear and verify its visibility
     cy.get('.cart-popup-content.popup-bookmarks', { timeout: 10000 })
       .should('exist')
       .and('be.visible');
 
-    // Click the button to continue to the cart
+    // Step 9: Click the button to continue to the cart
     cy.get('.mk-btn.mk-primary.js-continue.cart-popup-handled')
       .should('be.visible')
       .click();
 
-    // Navigate to the cart page
+    // Step 10: Navigate to the cart page
     cy.visit('https://www.megaknihy.cz/rychla-objednavka');
 
-    // Check if the URL is correct
+    // Step 11: Check if the URL is correct
     cy.url().should('include', '/rychla-objednavka');
 
-    // Check for the existence of the item in the cart
+    // Step 12: Check for the existence of the item in the cart
     cy.contains('Harry Potter and the Philosopher´s Stone', { timeout: 10000 })
       .should('exist')
       .then(() => {
