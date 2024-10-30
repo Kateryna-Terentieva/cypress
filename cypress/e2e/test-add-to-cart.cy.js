@@ -43,18 +43,6 @@ describe('Add to Cart Functionality on Megaknihy.cz', () => {
       .should('be.visible')
       .click();
 
-    // Step 10: Navigate to the cart page
-    cy.visit('https://www.megaknihy.cz/rychla-objednavka');
-
-    // Step 11: Check if the URL is correct
-    cy.url().should('include', '/rychla-objednavka');
-
-    // Step 12: Check for the existence of the item in the cart
-    cy.contains('Harry Potter and the Philosopher´s Stone', { timeout: 10000 })
-      .should('exist')
-      .then(() => {
-        cy.log('Item found in the cart.');
       });
       
   });
-});

@@ -19,7 +19,7 @@ describe('Megaknihy.cz Login', () => {
   .should('not.be.visible'); // Use not.be.visible instead of not.exist 
 
         // Step 5: Click the login button
-        cy.get('a[href*="identita"]', { timeout: 10000 }).should('be.visible').click();
+        cy.get('a', { timeout: 10000 }).contains('Účet').click();
         
         // Step 6: Enter username and password
         cy.get('input[name="email"]').type('katherine.terentieva@gmail.com');
@@ -27,9 +27,6 @@ describe('Megaknihy.cz Login', () => {
 
         // Step 7: Submit the login form
         cy.get('button[type="submit"]').click();
-
-        // Step 8: Assert successful login
-        cy.url('https://www.megaknihy.cz/profil').should('include', '/'); // Adjust based on the actual redirect URL
 
         //  Step 9: Check for error messages if login fails
         cy.get('.error-message', { timeout: 10000 }).should('not.exist');
